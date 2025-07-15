@@ -2,6 +2,7 @@ import axios from "axios";
 import { API } from "../configs/env";
 import { getLocalStorage } from "../utils/helpers";
 import { ERROR_MESSAGES, LOCAL_STORAGE_KEY } from "../utils/constants";
+import { AUTH_ROUTES } from "../routing/routes";
 
 export const METHODS = {
   POST: "post",
@@ -53,6 +54,12 @@ axiosInstance.interceptors.response.use(
       message: errorMessage,
       ...response,
     };
+
+    if ([401].includes(status)) {
+      localStorage.clear();
+      window.location.href = AUTH_ROUTES.LOGIN.url;
+      return Promise.reject(customErrorMessage);
+    }
 
     return Promise.reject(customErrorMessage);
   }

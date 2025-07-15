@@ -13,3 +13,10 @@ export const ERROR_MESSAGES = {
   504: "Server took too long. Try again.",
   common: "Oops! Something went wrong. Try later.",
 };
+
+export const ROLES = {
+  ADMIN: "admin",
+  USER: "user",
+};
+
+export const APP_TITLE = "My Application";
