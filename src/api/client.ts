@@ -1,5 +1,8 @@
 import axios from "axios";
 import { API } from "../configs/env";
+import { getLocalStorage } from "../utils/helpers";
+import { ERROR_MESSAGES, LOCAL_STORAGE_KEY } from "../utils/constants";
+
 export const METHODS = {
   POST: "post",
   GET: "get",
@@ -21,11 +24,12 @@ const axiosConfig = {
 const axiosInstance = axios.create(axiosConfig);
 
 axiosInstance.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
+  const token = getLocalStorage(LOCAL_STORAGE_KEY);
 
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
+
   return config;
 });
 
@@ -40,7 +44,10 @@ axiosInstance.interceptors.response.use(
 
     const { status } = response;
 
-    const errorMessage = response?.error?.message;
+    const errorMessage =
+      response?.error?.message ||
+      ERROR_MESSAGES[status as keyof typeof ERROR_MESSAGES] ||
+      ERROR_MESSAGES.common;
 
     const customErrorMessage = {
       message: errorMessage,
