@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import { API } from "../configs/env";
 export const METHODS = {
   POST: "post",
   GET: "get",
@@ -10,10 +10,14 @@ export const METHODS = {
   OPTIONS: "options",
 };
 
+const BASE_URL = API.URL;
+// const DEFAULT_PREFIX = "/api";
+
 const axiosConfig = {
-  baseURL: "https://jsonplaceholder.typicode.com",
+  baseURL: BASE_URL,
   withCredentials: true,
 };
+
 const axiosInstance = axios.create(axiosConfig);
 
 axiosInstance.interceptors.request.use((config) => {
