@@ -83,14 +83,6 @@ interface AuthProviderProps {
 
 /*
 
-1. if there is token then useEffect implement, and it assigned in setUser.
-2. then if user role is admin then redirect do dashboard else, auth route.
-3. while login, new token will go.
-4. while logout, token will remove, useEffect execute and reset all things,.
-*/
-
-/*
-
 1. Let say, there is a key='auth_route' and value= not set yet
       - token === "" (default value)
       - Stored in React state AND localStorage [ in custom hook ].
