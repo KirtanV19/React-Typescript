@@ -20,3 +20,4 @@ export const ROLES = {
 };
 
 export const APP_TITLE = "My Application";
+export const CACHED_URL_LOCAL_STORAGE_KEY = "cached-redirect-url";
