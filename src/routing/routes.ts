@@ -1,4 +1,4 @@
-import { APP_TITLE } from "../utils/constants";
+import { APP_TITLE, ROLES } from "../utils/constants";
 
 export const PLAIN_ROUTES = {
   root: {
@@ -52,5 +52,41 @@ export const AUTH_ROUTES = {
     title: "Reset Password",
     path: "/reset-password",
     url: "/reset-password",
+  },
+};
+
+export const PRIVATE_ROUTES = {
+  layout: {
+    path: "/",
+  },
+  DASHBOARD: {
+    path: "/dashboard",
+    roles: Object.values(ROLES),
+    title: "Dashboard",
+    url: "/dashboard",
+  },
+  USERS: {
+    path: "/users",
+    roles: Object.values(ROLES),
+    title: "Users",
+    url: "/users",
+  },
+  ADD_USERS: {
+    path: "/users/add",
+    roles: Object.values(ROLES),
+    title: "Add Users",
+    url: "/users/add",
+  },
+  ACCOUNT: {
+    path: "/account",
+    roles: Object.values(ROLES),
+    title: "Account",
+    url: "/account",
+  },
+  SETTINGS: {
+    path: "/settings",
+    roles: Object.values(ROLES),
+    title: "Settings",
+    url: "/settings",
   },
 };
