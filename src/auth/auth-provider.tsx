@@ -4,6 +4,7 @@ import { LOCAL_STORAGE_KEY, ROLES } from "../utils/constants";
 import { REDIRECTION } from ".";
 import { AUTH_ROUTES } from "../routing/routes";
 import { decodeToken } from "../utils/helpers";
+import { useTimeout } from "@mantine/hooks";
 
 const AuthContext = createContext<unknown>(undefined); // context hold the value 'unknown' it means can not use value without narrowing or type assertions, and default value is undefined.
 

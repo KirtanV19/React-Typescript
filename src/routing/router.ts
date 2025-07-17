@@ -15,10 +15,36 @@ import DashboardLayout from "../layouts/dashboard-layout/navbar";
 import Dashboard from "../pages/dashboard";
 import Settings from "../pages/settings";
 import Account from "../pages/account";
+import { getAuth } from "../auth";
 
-const authLayoutLoder = () => {};
-const dashboardLayoutLoader = () => {};
-const dashboardPageLoader = (roles: Array<string>) => {};
+const authLayoutLoader = () => {
+  const { isAuthenticated, redirectUrl } = getAuth({});
+  if (isAuthenticated) {
+    return redirect(redirectUrl);
+  }
+  return null;
+};
+
+const dashboardLayoutLoader = () => {
+  const { isAuthenticated, redirectUrl } = getAuth({
+    isCacheRedirection: true,
+  });
+
+  if (!isAuthenticated) {
+    return redirect(redirectUrl);
+  }
+  return null;
+};
+
+const dashboardPageLoader = (roles: string[]) => () => {
+  const { isAuthenticated, role } = getAuth({});
+
+  if (isAuthenticated && !roles.includes(role)) {
+    return redirect("/404");
+  }
+
+  return null;
+};
 export const router = createBrowserRouter([
   {
     ...PLAIN_ROUTES.layout,
@@ -33,7 +59,7 @@ export const router = createBrowserRouter([
   {
     ...AUTH_ROUTES.layout,
     Component: AuthLayout,
-    loader: authLayoutLoder,
+    loader: authLayoutLoader,
     children: [
       {
         ...PLAIN_ROUTES.root,
@@ -71,3 +97,10 @@ export const router = createBrowserRouter([
   },
   { path: "*", Component: PageNotFound },
 ]);
+
+/**
+ * loader:- is used to fetch data before rendering. , can access data of loader in another component using useLoaderData(). ,  use for GET request.
+ * action:- is used to handle submission or DB mutation, can access data of action using useActionData(). , use for POST, PUT, PATCH, DELETE request.
+ * errorElemet:- Fallback UI if loader or action throws an error.
+ *
+ */

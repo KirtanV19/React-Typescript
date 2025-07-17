@@ -41,3 +41,23 @@ export const decodeToken = (token: string | null = null) => {
   const decoded = jwtDecode(token);
   return decoded;
 };
+
+export const isTokenActive = (token: string | null = null): boolean => {
+  if (!token) {
+    return false;
+  }
+  try {
+    const decoded = jwtDecode(token);
+    return Boolean(decoded?.exp && decoded.exp > Date.now() / 1000);
+  } catch {
+    return false;
+  }
+};
+
+export const setLocalStorage = (key: string, value: unknown) => {
+  return localStorage.setItem(key, JSON.stringify(value));
+};
+
+export const removeLocalStorage = (key: string) => {
+  localStorage.removeItem(key);
+};
